@@ -15,6 +15,7 @@ setup(
   install_requires=[
     'twitter.common.app==0.3.3',
     'twitter.common.zookeeper==0.3.3',
+    'thrift==0.9.1',
   ],
   entry_points = {
     'console_scripts': [
