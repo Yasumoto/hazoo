@@ -1,5 +1,6 @@
 import os
 import socket
+from textwrap import dedent
 
 from config import HadoopXmlConf
 
@@ -46,8 +47,24 @@ class Configure(object):
     self.cwd = os.getcwd()
     self.hostname = socket.gethostname()
     
-    with open('./original_config.xml.orig') as fp:
-      config_string = fp.read()
+    config_string = dedent("""<configuration>
+                                <property>
+                              	  <name>mapred.fairscheduler.allocation.file</name>
+                              		<value>./fair-scheduler.xml</value>
+                              	</property>
+                                <property>
+                              	  <name>mapreduce.framework.name</name>
+                              		<value>yarn</value>
+                              	</property>
+                                <property>
+                              	  <name>yarn.nodemanager.aux-services</name>
+                              		<value>mapreduce_shuffle</value>
+                              	</property>
+                                <property>
+                              	  <name>yarn.resourcemanager.scheduler.class</name>
+                              		<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
+                              	</property>
+                              </configuration>""")
       self.hadoopxml = HadoopXmlConf(config_string)
 
   def generate_xml(self, nm_web_port, nm_main_port, nm_loc_port, nm_shuffle_port, dn_web_port, dn_ipc_port, dn_rpc_port):
