@@ -65,7 +65,7 @@ class Configure(object):
                               		<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
                               	</property>
                               </configuration>""")
-      self.hadoopxml = HadoopXmlConf(config_string)
+    self.hadoopxml = HadoopXmlConf(config_string)
 
   def generate_xml(self, nm_web_port, nm_main_port, nm_loc_port, nm_shuffle_port, dn_web_port, dn_ipc_port, dn_rpc_port):
     """
@@ -73,32 +73,32 @@ class Configure(object):
     """
     hadoop_opts = {
         'yarn.resourcemanager.hostname': self.headnode,
-        'fs.defaultFS': 'hdfs://%s:%s' % (self.headnode, self.nn_rpc_port),
-        'fs.default.name': 'hdfs://%s:%s' % (self.headnode, self.nn_rpc_port),
-        'dfs.namenode.http-address': '%s:%s' % (self.headnode, self.nn_http_port),
-        'dfs.namenode.rpc-address': '%s:%s' % (self.headnode, self.nn_rpc_port),
-        'dfs.namenode.servicerpc-address': '%s:%s' % (self.headnode, self.nn_srpc_port),
+        'fs.defaultFS': 'hdfs://%s:%d' % (self.headnode, self.nn_rpc_port),
+        'fs.default.name': 'hdfs://%s:%d' % (self.headnode, self.nn_rpc_port),
+        'dfs.namenode.http-address': '%s:%d' % (self.headnode, self.nn_http_port),
+        'dfs.namenode.rpc-address': '%s:%d' % (self.headnode, self.nn_rpc_port),
+        'dfs.namenode.servicerpc-address': '%s:%d' % (self.headnode, self.nn_srpc_port),
         'yarn.resourcemanager.scheduler.class':
         'org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler',
         'mapred.fairscheduler.allocation.file': os.path.join(self.cwd, 'fair-scheduler.xml'),
         'mapreduce.framework.name': 'yarn',
         'yarn.nodemanager.aux-services': 'mapreduce_shuffle',
         
-        'yarn.resourcemanager.address': '%s:%s' %(self.headnode, self.rm_rpc_port),
-        'yarn.resourcemanager.resource-tracker.address': '%s:%s' %(self.headnode, self.rm_tracker_port),
-        'yarn.resourcemanager.scheduler.address': '%s:%s' %(self.headnode, self.rm_sch_port),
-        'yarn.resourcemanager.webapp.address': '%s:%s' %(self.headnode, self.rm_web_port),
-        'yarn.resourcemanager.admin.address': '%s:%s' %(self.headnode, self.rm_admin_port),
-        'mapreduce.jobhistory.address': '%s:%s' %(self.headnode, self.rm_hist_port),
-        'mapreduce.jobhistory.webapp.address': '%s:%s' %(self.headnode, self.rm_histweb_port),
+        'yarn.resourcemanager.address': '%s:%d' %(self.headnode, self.rm_rpc_port),
+        'yarn.resourcemanager.resource-tracker.address': '%s:%d' %(self.headnode, self.rm_tracker_port),
+        'yarn.resourcemanager.scheduler.address': '%s:%d' %(self.headnode, self.rm_sch_port),
+        'yarn.resourcemanager.webapp.address': '%s:%d' %(self.headnode, self.rm_web_port),
+        'yarn.resourcemanager.admin.address': '%s:%d' %(self.headnode, self.rm_admin_port),
+        'mapreduce.jobhistory.address': '%s:%d' %(self.headnode, self.rm_hist_port),
+        'mapreduce.jobhistory.webapp.address': '%s:%d' %(self.headnode, self.rm_histweb_port),
         
-        'yarn.nodemanager.webapp.address': '%s:%s' % (self.hostname, nm_web_port),
-        'yarn.nodemanager.address': '%s:%s' % (self.hostname, nm_main_port),
-        'yarn.nodemanager.localizer.address': '%s:%s' % (self.hostname, nm_loc_port),
-        'mapreduce.shuffle.port': nm_shuffle_port,
-        'dfs.datanode.http.address': '%s:%s' % (self.hostname, dn_web_port),
-        'dfs.datanode.ipc.address': '%s:%s' % (self.hostname, dn_ipc_port),
-        'dfs.datanode.address': '%s:%s' % (self.hostname, dn_rpc_port),
+        'yarn.nodemanager.webapp.address': '%s:%d' % (self.hostname, nm_web_port),
+        'yarn.nodemanager.address': '%s:%d' % (self.hostname, nm_main_port),
+        'yarn.nodemanager.localizer.address': '%s:%d' % (self.hostname, nm_loc_port),
+        'mapreduce.shuffle.port': "%d" % nm_shuffle_port,
+        'dfs.datanode.http.address': '%s:%d' % (self.hostname, dn_web_port),
+        'dfs.datanode.ipc.address': '%s:%d' % (self.hostname, dn_ipc_port),
+        'dfs.datanode.address': '%s:%d' % (self.hostname, dn_rpc_port),
         
         'dfs.namenode.name.dir': os.path.join(self.cwd, 'nndata'),
         'dfs.datanode.data.dir': os.path.join(self.cwd, 'dndata'),
