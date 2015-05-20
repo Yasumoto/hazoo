@@ -20,30 +20,17 @@ class Configure(object):
   def __init__(self, **kwargs):
     """Requires an AdditionalEndpoints dictionary used when announcing a headnode
     """
-    #self.headnode = kwargs[self.RM_RPC_PORT].host
-    #self.rm_rpc_port = kwargs[self.RM_RPC_PORT].port
-    #self.nn_rpc_port = kwargs[self.NN_RPC_PORT].port
-    #self.nn_srpc_port = kwargs[self.NN_SRPC_PORT].port
-    #self.rm_tracker_port = kwargs[self.RM_TRACKER_PORT].port
-    #self.rm_sch_port = kwargs[self.RM_SCH_PORT].port
-    #self.rm_hist_port = kwargs[self.RM_HIST_PORT].port
-    #self.rm_histweb_port = kwargs[self.RM_HISTWEB_PORT].port
-    #self.rm_web_port = kwargs[self.RM_WEB_PORT].port
-    #self.rm_admin_port = kwargs[self.RM_ADMIN_PORT].port
-    #self.nn_http_port = kwargs[self.NN_HTTP_PORT].port
-
-    
-    self.headnode = kwargs[self.RM_RPC_PORT]['host']
-    self.rm_rpc_port = kwargs[self.RM_RPC_PORT]['port']
-    self.nn_rpc_port = kwargs[self.NN_RPC_PORT]['port']
-    self.nn_srpc_port = kwargs[self.NN_SRPC_PORT]['port']
-    self.rm_tracker_port = kwargs[self.RM_TRACKER_PORT]['port']
-    self.rm_sch_port = kwargs[self.RM_SCH_PORT]['port']
-    self.rm_hist_port = kwargs[self.RM_HIST_PORT]['port']
-    self.rm_histweb_port = kwargs[self.RM_HISTWEB_PORT]['port']
-    self.rm_web_port = kwargs[self.RM_WEB_PORT]['port']
-    self.rm_admin_port = kwargs[self.RM_ADMIN_PORT]['port']
-    self.nn_http_port = kwargs[self.NN_HTTP_PORT]['port']
+    self.headnode = kwargs[self.RM_RPC_PORT].host
+    self.rm_rpc_port = kwargs[self.RM_RPC_PORT].port
+    self.nn_rpc_port = kwargs[self.NN_RPC_PORT].port
+    self.nn_srpc_port = kwargs[self.NN_SRPC_PORT].port
+    self.rm_tracker_port = kwargs[self.RM_TRACKER_PORT].port
+    self.rm_sch_port = kwargs[self.RM_SCH_PORT].port
+    self.rm_hist_port = kwargs[self.RM_HIST_PORT].port
+    self.rm_histweb_port = kwargs[self.RM_HISTWEB_PORT].port
+    self.rm_web_port = kwargs[self.RM_WEB_PORT].port
+    self.rm_admin_port = kwargs[self.RM_ADMIN_PORT].port
+    self.nn_http_port = kwargs[self.NN_HTTP_PORT].port
     self.cwd = os.getcwd()
     self.hostname = socket.gethostname()
     

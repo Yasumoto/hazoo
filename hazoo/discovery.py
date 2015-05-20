@@ -20,9 +20,7 @@ class Discovery(object):
     :type headnode_path: str
     :rtype: dict
     
-    """
-    return {"nm_shuffle": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31390}, "http": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31016}, "nn_rpc": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31224}, "dn_ipc": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31441}, "rm_hist": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31385}, "aurora": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31016}, "rm_admin": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31912}, "rm_tracker": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31456}, "rm_rpc": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31055}, "nm_loc": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31921}, "rm_web": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31789}, "nn_http": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31319}, "nm_web": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31305}, "rm_sch": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31487}, "dn_web": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31715}, "nn_srpc": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31864}, "dn_rpc": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31628}, "nm_main": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31929}, "rm_hist_web": {"host": "smfd-akb-06-sr1.devel.twitter.com", "port": 31915}}
-    
+    """    
     log.debug('Taking a look at %s' % headnode_path)
     serverset = ServerSet(self.sdzk, headnode_path)
     service_instances = list(serverset)
