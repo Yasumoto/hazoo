@@ -95,8 +95,8 @@ class Configure(object):
         'dfs.datanode.ipc.address': '%s:%d' % (self.hostname, dn_ipc_port),
         'dfs.datanode.address': '%s:%d' % (self.hostname, dn_rpc_port),
         
-        'dfs.namenode.name.dir': os.path.join(self.cwd, 'nndata'),
-        'dfs.datanode.data.dir': os.path.join(self.cwd, 'dndata'),
+        #'dfs.namenode.name.dir': os.path.join(self.cwd, 'nndata'),
+        #'dfs.datanode.data.dir': os.path.join(self.cwd, 'dndata'),
         'yarn.nodemanager.local-dirs': os.path.join(self.cwd, 'yarn_local'),
         'yarn.nodemanager.log-dirs': os.path.join(self.cwd, 'yarn_log'),
     }
