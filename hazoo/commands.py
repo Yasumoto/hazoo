@@ -57,7 +57,7 @@ def create_workernode(args, options):
   
   log.debug('Identifying headnode')
   headnode_endpoints = Discovery(zookeeper_ensemble_url).retrieve_headnode_endpoint(
-      '/twitter/service/%s/devel/hadoop_head' % getpass.getuser())
+      '/twitter/service/%s/devel/hadoop_headnode' % getpass.getuser())
   log.debug('Found endpoints: %s' % headnode_endpoints)
   
   configured_xml = Configure(**headnode_endpoints).generate_xml(options.nm_web_port,

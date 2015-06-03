@@ -24,6 +24,7 @@ class Discovery(object):
     log.debug('Taking a look at %s' % headnode_path)
     serverset = ServerSet(self.sdzk, headnode_path)
     service_instances = list(serverset)
+    log.debug('Found a serverset of: %s' % service_instances)
     if len(service_instances) > 1:
       raise self.TooManyHeadnodes('Found multiple headnodes at %s' % headnode_path)
     headnode = service_instances[0]
@@ -33,7 +34,7 @@ class Discovery(object):
   @property
   def sdzk(self):
     if self._sdzk is None:
-      self._sdzk = TwitterKazooClient.make(hosts='%s:2181' % self.zookeeper_ensemble_url, verbose=False)
+      self._sdzk = TwitterKazooClient.make(hosts='%s:2181' % self.zookeeper_ensemble_url, verbose=True)
       log.debug('Connected to %s' % self._sdzk)
     return self._sdzk
     

@@ -51,6 +51,14 @@ class Configure(object):
                               	  <name>yarn.resourcemanager.scheduler.class</name>
                               		<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
                               	</property>
+                              	<property>
+                              	  <name>dfs.namenode.name.dir</name>
+                                  <value>/data/name,/data1/name</value>
+                                </property>
+                                <property>
+                              	  <name>dfs.datanode.data.dir</name>
+                              	  <value>/data/disk1/dfs,/data/disk2/dfs,/data/disk3/dfs,/data/disk4/dfs,/data/disk5/dfs,/data/disk6/dfs,/data/disk7/dfs,/data/disk8/dfs,/data/disk9/dfs,/data/disk10/dfs,/data/disk11/dfs,/data/disk12/dfs</value>
+                                </property>
                               </configuration>""")
     self.hadoopxml = HadoopXmlConf(config_string)
 
