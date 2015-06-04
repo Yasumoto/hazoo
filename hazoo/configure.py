@@ -53,7 +53,7 @@ class Configure(object):
                               	</property>
                               	<property>
                               	  <name>dfs.namenode.name.dir</name>
-                                  <value>/data/name,/data1/name</value>
+                                  <value>/data/disk1/name,/data/disk2/name</value>
                                 </property>
                                 <property>
                               	  <name>dfs.datanode.data.dir</name>
