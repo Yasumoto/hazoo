@@ -35,22 +35,6 @@ class Configure(object):
     self.hostname = socket.gethostname()
     
     config_string = dedent("""<configuration>
-                                <property>
-                              	  <name>mapred.fairscheduler.allocation.file</name>
-                              		<value>./fair-scheduler.xml</value>
-                              	</property>
-                                <property>
-                              	  <name>mapreduce.framework.name</name>
-                              		<value>yarn</value>
-                              	</property>
-                                <property>
-                              	  <name>yarn.nodemanager.aux-services</name>
-                              		<value>mapreduce_shuffle</value>
-                              	</property>
-                                <property>
-                              	  <name>yarn.resourcemanager.scheduler.class</name>
-                              		<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
-                              	</property>
                               	<property>
                               	  <name>dfs.namenode.name.dir</name>
                                   <value>/data/disk1/name,/data/disk2/name</value>

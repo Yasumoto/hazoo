@@ -42,6 +42,13 @@ from twitter.common import log
   '--dn_rpc_port',
   dest='dn_rpc_port',
   type=int)
+@app.command_option(
+  '--headnode_path',
+  dest='headnode_path',
+  type=str,
+  default='/twitter/service/%s/devel/headnode' % getpass.getuser(),
+  help='Which Service Discovery path to lookup for the headnode',
+)
 @app.command
 def create_workernode(args, options):
   """Bootstrap a new Hadoop Worker node
@@ -54,10 +61,10 @@ def create_workernode(args, options):
   except IndexError:
     print("Please specify a url to perform Service Discovery")
     app.quit(1)
-  
+
   log.debug('Identifying headnode')
   headnode_endpoints = Discovery(zookeeper_ensemble_url).retrieve_headnode_endpoint(
-      '/twitter/service/%s/devel/headnode' % getpass.getuser())
+      options.headnode_path)
   log.debug('Found endpoints: %s' % headnode_endpoints)
   
   configured_xml = Configure(**headnode_endpoints).generate_xml(options.nm_web_port,
