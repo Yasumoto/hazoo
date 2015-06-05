@@ -34,73 +34,16 @@ class Configure(object):
     self.cwd = os.getcwd()
     self.hostname = socket.gethostname()
     
-    config_string = dedent("""<configuration>
-                                <property>
-                              	  <name>mapred.fairscheduler.allocation.file</name>
-                              		<value>./fair-scheduler.xml</value>
-                              	</property>
-                                <property>
-                              	  <name>mapreduce.framework.name</name>
-                              		<value>yarn</value>
-                              	</property>
-                                <property>
-                              	  <name>yarn.nodemanager.aux-services</name>
-                              		<value>mapreduce_shuffle</value>
-                              	</property>
-                                <property>
-                              	  <name>yarn.resourcemanager.scheduler.class</name>
-                              		<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
-                              	</property>
-                              	<property>
-                              	  <name>dfs.namenode.name.dir</name>
-                                  <value>/data/disk1/name,/data/disk2/name</value>
-                                </property>
-                                <property>
-                              	  <name>dfs.datanode.data.dir</name>
-                              	  <value>/data/disk1/dfs,/data/disk2/dfs,/data/disk3/dfs,/data/disk4/dfs,/data/disk5/dfs,/data/disk6/dfs,/data/disk7/dfs,/data/disk8/dfs,/data/disk9/dfs,/data/disk10/dfs,/data/disk11/dfs,/data/disk12/dfs</value>
-                                </property>
-                              </configuration>""")
-    self.hadoopxml = HadoopXmlConf(config_string)
 
-  def generate_xml(self, nm_web_port, nm_main_port, nm_loc_port, nm_shuffle_port, dn_web_port, dn_ipc_port, dn_rpc_port):
+    self.hadoopxml = HadoopXmlConf()
+
+  def generate_xml(self, preset_properties):
     """
     :rtype: str
     """
-    hadoop_opts = {
-        'yarn.resourcemanager.hostname': self.headnode,
-        'fs.defaultFS': 'hdfs://%s:%d' % (self.headnode, self.nn_rpc_port),
-        'fs.default.name': 'hdfs://%s:%d' % (self.headnode, self.nn_rpc_port),
-        'dfs.namenode.http-address': '%s:%d' % (self.headnode, self.nn_http_port),
-        'dfs.namenode.rpc-address': '%s:%d' % (self.headnode, self.nn_rpc_port),
-        'dfs.namenode.servicerpc-address': '%s:%d' % (self.headnode, self.nn_srpc_port),
-        'yarn.resourcemanager.scheduler.class':
-        'org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler',
-        'mapred.fairscheduler.allocation.file': os.path.join(self.cwd, 'fair-scheduler.xml'),
-        'mapreduce.framework.name': 'yarn',
-        'yarn.nodemanager.aux-services': 'mapreduce_shuffle',
-        
-        'yarn.resourcemanager.address': '%s:%d' %(self.headnode, self.rm_rpc_port),
-        'yarn.resourcemanager.resource-tracker.address': '%s:%d' %(self.headnode, self.rm_tracker_port),
-        'yarn.resourcemanager.scheduler.address': '%s:%d' %(self.headnode, self.rm_sch_port),
-        'yarn.resourcemanager.webapp.address': '%s:%d' %(self.headnode, self.rm_web_port),
-        'yarn.resourcemanager.admin.address': '%s:%d' %(self.headnode, self.rm_admin_port),
-        'mapreduce.jobhistory.address': '%s:%d' %(self.headnode, self.rm_hist_port),
-        'mapreduce.jobhistory.webapp.address': '%s:%d' %(self.headnode, self.rm_histweb_port),
-        
-        'yarn.nodemanager.webapp.address': '%s:%d' % (self.hostname, nm_web_port),
-        'yarn.nodemanager.address': '%s:%d' % (self.hostname, nm_main_port),
-        'yarn.nodemanager.localizer.address': '%s:%d' % (self.hostname, nm_loc_port),
-        'mapreduce.shuffle.port': "%d" % nm_shuffle_port,
-        'dfs.datanode.http.address': '%s:%d' % (self.hostname, dn_web_port),
-        'dfs.datanode.ipc.address': '%s:%d' % (self.hostname, dn_ipc_port),
-        'dfs.datanode.address': '%s:%d' % (self.hostname, dn_rpc_port),
-        
-        #'dfs.namenode.name.dir': os.path.join(self.cwd, 'nndata'),
-        #'dfs.datanode.data.dir': os.path.join(self.cwd, 'dndata'),
-        'yarn.nodemanager.local-dirs': os.path.join(self.cwd, 'yarn_local'),
-        'yarn.nodemanager.log-dirs': os.path.join(self.cwd, 'yarn_log'),
-    }
-    for key, value in hadoop_opts.items():
-      self.hadoopxml.set(key, value)
+    with open(preset_properties,'r') as f:
+      for line in f:
+        k,v = line.split('=')
+        self.hadoopxml.set(k, v)
 
     return self.hadoopxml.to_str()
