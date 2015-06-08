@@ -18,6 +18,6 @@ class Configure(object):
         k,v = line.split('=')
         # Don't override if already set
         if not self.hadoopxml.get(k, None):
-          self.hadoopxml.set(k, v)
+          self.hadoopxml.set(k, v.strip())
 
     return self.hadoopxml.to_str()
