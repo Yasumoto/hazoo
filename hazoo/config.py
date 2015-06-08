@@ -23,8 +23,8 @@ class HadoopXmlConf(object):
   def __init__(self):
     self.props = {}
 
-  def get(self, key):
-    return self.props.get(key, None)
+  def get(self, key, default_value=None):
+    return self.props.get(key, default_value)
 
   def set(self, key, value):
     self.props[key] = value

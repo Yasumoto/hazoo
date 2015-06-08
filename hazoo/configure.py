@@ -16,6 +16,8 @@ class Configure(object):
     with open(preset_properties,'r') as f:
       for line in f:
         k,v = line.split('=')
-        self.hadoopxml.set(k, v)
+        # Don't override if already set
+        if not self.hadoopxml.get(k, None):
+          self.hadoopxml.set(k, v)
 
     return self.hadoopxml.to_str()
