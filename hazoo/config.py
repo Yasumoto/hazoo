@@ -2,6 +2,7 @@ from __future__ import print_function
 
 from contextlib import contextmanager
 from xml.etree import ElementTree as ET
+from xml.dom import minidom
 import errno
 import os
 import pprint
@@ -11,37 +12,32 @@ import sys
 from twitter.common.contextutil import temporary_dir
 
 
+def _to_nice_xml(doc):
+  rough_string = ET.tostring(doc, 'utf-8')
+  reparsed = minidom.parseString(rough_string)
+  return reparsed.toprettyxml(indent="  ")
+
+
+
 class HadoopXmlConf(object):
-  def __init__(self, content):
-    self.__doc = ET.fromstring(content)
-
-  def _new_element(self, key):
-    prop = ET.Element('property')
-    name = ET.SubElement(prop, 'name')
-    name.text = key
-    self.__doc.append(prop)
-    return prop
-
-  def _find_element(self, key, create=False):
-    for prop in self.__doc.findall('property'):
-      name = prop.find('name')
-      if name is not None and name.text == key:
-        # hit
-        return prop
-    # miss
-    if create:
-      return self._new_element(key)
+  def __init__(self):
+    self.props = {}
 
   def get(self, key):
-    return self._find_element(key)
+    return self.props.get(key, None)
 
   def set(self, key, value):
-    prop = self._find_element(key, create=True)
-    value_element = prop.find('value') or ET.SubElement(prop, 'value')
-    value_element.text = value
+    self.props[key] = value
 
   def to_str(self):
-    return ET.tostring(self.__doc)
+    hconf = ET.Element('configuration')
+    for k, v in self.props.items():
+      prop = ET.SubElement(hconf, 'property')
+      name = ET.SubElement(prop, 'name')
+      name.text = k
+      value = ET.SubElement(prop, 'value')
+      value.text = v
+    return _to_nice_xml(hconf)
 
 
 class HadoopConfig(object):
